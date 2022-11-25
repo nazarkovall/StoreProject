@@ -23,7 +23,7 @@ namespace StoreProject
         {
             while (true)
             {
-                Console.WriteLine("     Trading Company");
+                Console.WriteLine("     ~~~Store~~~");
                 Console.WriteLine(" Please choose an action:");
                 Console.WriteLine("1 -- Create new goods");
                 Console.WriteLine("2 -- Read all goods");

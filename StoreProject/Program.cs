@@ -107,16 +107,58 @@ namespace StoreProject
             }
         }
 
-        private static void UpdateOneGoods()
+        public static void UpdateOneGoods()
         {
-            throw new NotImplementedException();
+            Console.Write("Enter GoodsID: ");
+            int id = int.Parse(Console.ReadLine());
+            var dal = new GoodsDAL(_mapper);
+            var found = dal.GetGoods(id);
+
+            if (found != null)
+            {
+                Console.Write("Enter new name: ");
+                string name = Console.ReadLine();
+                Console.Write("Enter new color: ");
+                string color = Console.ReadLine();
+                Console.Write("Enter goods price: ");
+                bool price = double.TryParse(Console.ReadLine(), out double Price);
+
+                var created = new GoodsDTO
+                {
+                    GoodsID = id,
+                    Name = string.IsNullOrWhiteSpace(name) ? found.Name : name,
+                    Color = string.IsNullOrWhiteSpace(color) ? found.Color : color,
+                    Price = price ? Price : found.Price
+                };
+
+                dal.UpdateGoods(created);
+
+                Console.WriteLine($"Changed goods with ID {created.GoodsID}");
+            }
+            else
+            {
+                Console.WriteLine("No goods with such ID");
+            }
         }
 
-        private static void DeleteOneGoods()
+        public static void DeleteOneGoods()
         {
-            throw new NotImplementedException();
-        }
+            Console.Write("Enter product ID: ");
+            int id = int.Parse(Console.ReadLine());
+            var dal = new GoodsDAL(_mapper);
+            var found = dal.GetGoods(id);
 
+            if (found != null)
+            {
+                dal.DeleteGoods(found);
+
+                Console.WriteLine($"Deleted goods");
+            }
+            else
+            {
+                Console.WriteLine("Error!");
+            }
+        }
         private static void CreateNewCategory()
         {
             Console.WriteLine("Enter name of the category: ");

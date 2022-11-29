@@ -30,28 +30,46 @@ namespace DAL.Concrete
             }
         }
 
-        public void DeleteCategory(CategoryDTO category)
-        {
-            throw new NotImplementedException();
-        }
-
         public List<CategoryDTO> GetAllCategories()
         {
             using (var entities = new TradingCompanyDBEntities())
             {
-                var categoris = entities.categories.ToList();
-                return _mapper.Map<List<CategoryDTO>>(categoris);
+                var categories = entities.categories.ToList();
+                return _mapper.Map<List<CategoryDTO>>(categories);
+            }
+        }
+
+        public void DeleteCategory(CategoryDTO category)
+        {
+            using (var entities = new TradingCompanyDBEntities())
+            {
+                var found = entities.categories.SingleOrDefault(c => c.CategoryID == category.CategoryID);
+                entities.categories.Remove(found);
+                entities.SaveChanges();
             }
         }
 
         public CategoryDTO GetCategory(int id)
         {
-            throw new NotImplementedException();
+            using (var entities = new TradingCompanyDBEntities())
+            {
+                var found = entities.categories.SingleOrDefault(c => c.CategoryID == id);
+                return _mapper.Map<CategoryDTO>(found);
+            }
         }
 
         public void UpdateCategory(CategoryDTO category)
         {
-            throw new NotImplementedException();
+            using (var entities = new TradingCompanyDBEntities())
+            {
+                var found = entities.categories.SingleOrDefault(c => c.CategoryID == category.CategoryID);
+                if (found != null)
+                {
+                    found.Name = category.Name;
+                    found.RowUpdateTime = DateTime.UtcNow;
+                    entities.SaveChanges();
+                }
+            }
         }
     }
 }

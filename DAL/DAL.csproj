@@ -58,11 +58,13 @@
     </Compile>
     <Compile Include="Concrete\CategoryDAL.cs" />
     <Compile Include="Concrete\GoodsDAL.cs" />
+    <Compile Include="Concrete\UserDAL.cs" />
     <Compile Include="good.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Interfaces\ICategoryDAL.cs" />
     <Compile Include="Interfaces\IGoodsDAL.cs" />
+    <Compile Include="Interfaces\IUser.cs" />
     <Compile Include="Model.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

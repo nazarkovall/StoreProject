@@ -29,11 +29,6 @@ namespace DAL.Concrete
             }
         }
 
-        public void DeleteGoods(GoodsDTO goods)
-        {
-            throw new NotImplementedException();
-        }
-
         public List<GoodsDTO> GetAllGoods()
         {
             using (var entities = new TradingCompanyDBEntities())
@@ -43,14 +38,37 @@ namespace DAL.Concrete
             }
         }
 
+        public void DeleteGoods(GoodsDTO goods)
+        {
+            using (var entities = new TradingCompanyDBEntities())
+            {
+                var found = entities.goods.SingleOrDefault(g => g.GoodsID == goods.GoodsID);
+                entities.goods.Remove(found);
+                entities.SaveChanges();
+            }
+        }
+
         public GoodsDTO GetGoods(int id)
         {
-            throw new NotImplementedException();
+            using (var entities = new TradingCompanyDBEntities())
+            {
+                var found = entities.goods.SingleOrDefault(g => g.GoodsID == id);
+                return _mapper.Map<GoodsDTO>(found);
+            }
         }
 
         public void UpdateGoods(GoodsDTO goods)
         {
-            throw new NotImplementedException();
+            using (var entities = new TradingCompanyDBEntities())
+            {
+                var found = entities.goods.SingleOrDefault(g => g.GoodsID == goods.GoodsID);
+                if (found != null)
+                {
+                    found.Name = goods.Name;
+                    found.RowUpdateTime = DateTime.UtcNow;
+                    entities.SaveChanges();
+                }
+            }
         }
     }
 }
